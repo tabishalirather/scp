@@ -43,6 +43,11 @@ int main() {
     int sum_using_pointers = sum_with_pointers(array, size);
     printf("sum using pointers is: %d \n", sum_using_pointers);
 
+    int array_A[5] = {1,1,1,1,1};
+    int array_B[5] = {2,2,2,2,2};
+    int size_array_scalar_prod = sizeof(array_A)/sizeof(array_A[0]);
+    int scalar_prod_arr_pointers_value = scalar_prod_arr_pointers(array_A, array_B, size_array_scalar_prod);
+    printf("scalar_prod_arr_pointers_value: %d\n", scalar_prod_arr_pointers_value);
     return -1;
 
 
@@ -66,6 +71,9 @@ int sum_with_pointers(int array[], int size){
 
 int scalar_prod_arr_pointers(int array_A[], int array_B[], int size) {
     int scalar_prod = 0;
+    for (int i=0; i<size; i++) {
+        scalar_prod += *(array_A+i) * *(array_B+i);
+    }
 
     return scalar_prod;
 }
