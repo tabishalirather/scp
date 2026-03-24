@@ -47,7 +47,7 @@ int main() {
     int array_B[5] = {2,2,2,2,2};
     int size_array_scalar_prod = sizeof(array_A)/sizeof(array_A[0]);
     int scalar_prod_arr_pointers_value = scalar_prod_arr_pointers(array_A, array_B, size_array_scalar_prod);
-    printf("scalar_prod_arr_pointers_value: %d\n", scalar_prod_arr_pointers_value);
+    printf("scalar_prod_arr_pointers_value is: %d\n", scalar_prod_arr_pointers_value);
     return -1;
 
 
