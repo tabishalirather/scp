@@ -8,6 +8,7 @@ int scalar_prod_arr_pointers(int *array_A, int *array_B, int size);
 float inf_norm_pointers(float *array, int size);
 float norm_euclid_pointers(float *array, int size);
 float matrix_sum_pointers(int rows, int columns, float array[rows][columns]);
+void print_matrix_pointers(int rows, int columns, float* array);
 
 int main() {
     printf("main from premaster-3");
@@ -77,9 +78,25 @@ int main() {
     float matrix_sum_pointer_value = matrix_sum_pointers(ROWS, COLS, matrtx_for_sum_pointer);
     printf("matrix_sum using pointers is: %0.4f \n", matrix_sum_pointer_value);
 
+    //pass in the first element of the matrix and then iterate over rows and columsn
+    print_matrix_pointers(ROWS, COLS, &matrtx_for_sum_pointer[0][0]);
 
     return -1;
 }
+void print_matrix_pointers(int rows, int columns, float* array) {
+    printf("--------------------------------------------\n");
+    printf("print_matrix_pointers being called: \n");
+    // printf("argument for arrray contains the value: %f\n", *array);
+    for (int row=0; row<rows; row++) {
+        for (int col=0; col<columns; col++) {
+            printf("%f ", *(array + (row*columns)+col));
+            // printf("%f ", (*(array + col)+row));
+        }
+        printf("\n");
+    }
+}
+
+
 
 float matrix_sum_pointers(int rows, int columns, float array[rows][columns]) {  //to note, matrix does not decay to pointer type rather it decays to datatype* [4] type.
     printf("--------------------------------------------------\n");
