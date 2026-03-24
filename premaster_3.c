@@ -1,8 +1,13 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
 // CONTENT: POINTERS, ARRAYS, MATRICES
 
-int sum_with_pointers(int array[], int size);
-int scalar_prod_arr_pointers(int array_A[], int array_[], int size);
+int sum_with_pointers(int *array, int size);
+int scalar_prod_arr_pointers(int *array_A, int *array_B, int size);
+float inf_norm_pointers(float *array, int size);
+float norm_euclid_pointers(float *array, int size);
+float matrix_sum_pointers(int rows, int columns, float array[rows][columns]);
 
 int main() {
     printf("main from premaster-3");
@@ -48,10 +53,59 @@ int main() {
     int size_array_scalar_prod = sizeof(array_A)/sizeof(array_A[0]);
     int scalar_prod_arr_pointers_value = scalar_prod_arr_pointers(array_A, array_B, size_array_scalar_prod);
     printf("scalar_prod_arr_pointers_value is: %d\n", scalar_prod_arr_pointers_value);
+
+    float inf_norm_arr[4]={5,2.2,-32,2};
+    size = sizeof(inf_norm_arr)/sizeof(inf_norm_arr[0]);
+    float inf_norm_value = inf_norm_pointers(inf_norm_arr, size);
+    printf("inf_norm is: %f \n", inf_norm_value);
+
+
+    float euclid_norm_arr[4]= {1,2,3,5};
+    size = sizeof(euclid_norm_arr)/sizeof(euclid_norm_arr[0]);
+    float euclid_norm_value = norm_euclid_pointers(euclid_norm_arr, size);
+    printf("Euclidean norm for given array is: %.4f\n", euclid_norm_value);
+
+    printf("---------------- \n");
+    printf("Pointers and matrices\n");
+    int test_matrix[3][3] = {{1,2,3},{3,2,1}, {3,6,1}};
+    // int* test_matrix_addr = &test_matrix[3][3];
+    printf("printed using pointers: %d \n", *(*(test_matrix+2)+1)); // this should print test: test_matrix[2][1]===i.e 6
+    printf("Another way of acces is row-major order: %d \n", *((int *)test_matrix + (0*3) +0)); //*(matrix + (row_num * number_of_columns) + column_number);
+    float matrix_sum_value=0;
+    enum  ENUM {ROWS= 3, COLS= 3};
+    float matrtx_for_sum_pointer[ROWS][COLS] = {{1,2,3.24}, {3,4,5},{5,6,7}};
+    float matrix_sum_pointer_value = matrix_sum_pointers(ROWS, COLS, matrtx_for_sum_pointer);
+    printf("matrix_sum using pointers is: %0.4f \n", matrix_sum_pointer_value);
+
+
     return -1;
-
-
 }
+
+float matrix_sum_pointers(int rows, int columns, float array[rows][columns]) {  //to note, matrix does not decay to pointer type rather it decays to datatype* [4] type.
+    printf("--------------------------------------------------\n");
+    float matrix_sum=0;
+    for (int i=0; i<rows; i++) {
+        for (int j=0; j<columns; j++) {
+            matrix_sum += *(*(array+i)+j);
+        }
+    }
+
+    return matrix_sum;
+}
+
+float norm_euclid_pointers(float *array, int size) {
+    printf("--------------------------------\n");
+    float euclid_norm = 0;
+    for (int i=0; i<size; i++) {
+        euclid_norm += pow((*(array+i)),2);
+    }
+    euclid_norm = sqrt(euclid_norm);
+
+
+    return euclid_norm;
+}
+
+
 
 int sum_with_pointers(int array[], int size){
     int sum = 0;
@@ -60,7 +114,7 @@ int sum_with_pointers(int array[], int size){
 
 
     for (int i=0; i<size; i++) {
-        printf("element at %d is %d: \n", i, *(array+i));
+        printf("element at %d is: %d \n", i, *(array+i));
     }
     for (int i=0; i<size; i++) {
         sum+=*(array+i);
@@ -76,4 +130,15 @@ int scalar_prod_arr_pointers(int array_A[], int array_B[], int size) {
     }
 
     return scalar_prod;
+}
+float inf_norm_pointers(float *array, int size) {
+    printf("-------------------------------------------------\n");
+    float inf_norm_value = fabs(*array);
+    for (int i=0; i<size; i++) {
+        if (fabs(*(array+i))>fabs(inf_norm_value)) {
+            inf_norm_value=fabs(*(array+i));
+            // printf("max value %f is at index i %d \n:", abs(array[i]), i);
+        }
+    }
+    return fabs(inf_norm_value);
 }
