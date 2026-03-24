@@ -41,7 +41,7 @@ int main() {
     int array_for_sum[4]={-2,-1,0,1};
     int size= sizeof(array_for_sum)/sizeof(array_for_sum[0]);
     int sum_using_pointers = sum_with_pointers(array, size);
-    printf("sum using pointers is: %d \n", sum_using_pointers);
+    printf("sum using pointers is as given: %d \n", sum_using_pointers);
 
     int array_A[5] = {1,1,1,1,1};
     int array_B[5] = {2,2,2,2,2};
