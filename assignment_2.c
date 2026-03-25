@@ -3,8 +3,10 @@
 
 void max_from_columns(int rows, int cols, float* matrix);
 void squared_sum_pointers(int rows, int cols, float (*matrix)[cols]);
+void print_and_max_index(int size, float (*array));
+void print_array(int size, float (*array));
 
-int main() {
+int main(){
     printf("main is working\n");
 
     enum DIMS {ROWS=3, COLS=4};
@@ -26,7 +28,6 @@ void max_from_columns(int rows, int cols, float* matrix) {
     // printf("first value of matrix argument is: %f\n", *matrix);
     max_vector[0] = (*matrix);
     // printf("max_vector starting value is: %f\n", max_vector[0]);
-
         for (int row=0; row<rows; row++){
             for (int col=0; col<cols; col++){
             printf("%0.2f ", *(matrix + (row*cols) + col));
@@ -40,11 +41,7 @@ void max_from_columns(int rows, int cols, float* matrix) {
     }
     printf("\n");
     printf("Vector of maxs is: \n");
-    for (int i=0; i<rows; i++) {
-        printf("%0.2f \n", *(max_vector+i));
-    }
-
-
+    print_array(rows, max_vector);
 }
 
 void squared_sum_pointers(int rows, int cols, float (*matrix)[cols]) {
@@ -53,25 +50,32 @@ void squared_sum_pointers(int rows, int cols, float (*matrix)[cols]) {
     squared_sum_vector[0]=0;
     for (int j=0; j<rows; j++){
         for (int i=0; i<cols; i++)    {
-            // printf("%0.2f ", *(matrix +(j*cols)+i));
             printf("%0.2f ", *(*(matrix+j)+i));
             squared_sum_vector[j] += pow(*(*(matrix+j)+i), 2);
         }
         printf("\n");
-        // printf("K=%d: %0.4f \n",j, *(squared_sum_vector+j));
-
-
     }
-
     printf("\n");
-    float max_value = *(squared_sum_vector);
+    print_and_max_index(rows, squared_sum_vector);
+}
+
+void print_and_max_index(int size, float (*array)) {
+    float max_value = *(array);
     int max_index = 0;
-    for (int i=0; i<rows; i++) {
-        printf("K=%d: %0.4f \n",i, *(squared_sum_vector+i));
-        if (*(squared_sum_vector+i)> max_value) {
-            max_value = *(squared_sum_vector+i);
+    for (int i=0; i<size; i++) {
+        printf("K=%d: %0.4f \n",i, *(array+i));
+        if (*(array+i)> max_value) {
+            max_value = *(array+i);
             max_index = i;
-         }
+        }
     }
     printf("\nmax_value=%0.2f has index K=%d", max_value, max_index);
+}
+
+void print_array(int size, float (*array)) {
+    for (int i=0; i<size; i++) {
+        printf("%0.2f \n", *(array+i));
+        // printf("K=%d: %0.4f \n",i, *(array+i));
+    }
+
 }
