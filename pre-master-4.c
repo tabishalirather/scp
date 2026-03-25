@@ -3,5 +3,5 @@
 #include <stdio.h>
 
 int main() {
-    printf("Printing from main function with return int");
+    printf("Printing from main function with return type int");
 }
