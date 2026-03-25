@@ -1,0 +1,108 @@
+<html>
+<head>
+<title>assignment_2.c</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #b3ae60;}
+.s1 { color: #bcbec4;}
+.s2 { color: #6aab73;}
+.s3 { color: #cf8e6d;}
+.s4 { color: #bcbec4;}
+.s5 { color: #2aacb8;}
+.s6 { color: #7a7e85;}
+</style>
+</head>
+<body bgcolor="#191a1c">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+assignment_2.c</font>
+</center></td></tr></table>
+<pre><span class="s0">#include </span><span class="s2">&lt;stdio.h&gt;</span>
+<span class="s0">#include </span><span class="s2">&lt;math.h&gt;</span>
+
+<span class="s3">void </span><span class="s1">max_from_columns</span><span class="s4">(</span><span class="s3">int </span><span class="s1">rows</span><span class="s4">, </span><span class="s3">int </span><span class="s1">cols</span><span class="s4">, </span><span class="s3">float</span><span class="s4">* </span><span class="s1">matrix</span><span class="s4">);</span>
+<span class="s3">void </span><span class="s1">squared_sum_pointers</span><span class="s4">(</span><span class="s3">int </span><span class="s1">rows</span><span class="s4">, </span><span class="s3">int </span><span class="s1">cols</span><span class="s4">, </span><span class="s3">float </span><span class="s4">(*</span><span class="s1">matrix</span><span class="s4">)[</span><span class="s1">cols</span><span class="s4">]);</span>
+<span class="s3">void </span><span class="s1">print_and_max_index</span><span class="s4">(</span><span class="s3">int </span><span class="s1">size</span><span class="s4">, </span><span class="s3">float </span><span class="s4">(*</span><span class="s1">array</span><span class="s4">));</span>
+<span class="s3">void </span><span class="s1">print_array</span><span class="s4">(</span><span class="s3">int </span><span class="s1">size</span><span class="s4">, </span><span class="s3">float </span><span class="s4">(*</span><span class="s1">array</span><span class="s4">));</span>
+
+<span class="s3">int </span><span class="s1">main</span><span class="s4">(){</span>
+    <span class="s1">printf</span><span class="s4">(</span><span class="s2">&quot;main is working</span><span class="s3">\n</span><span class="s2">&quot;</span><span class="s4">);</span>
+
+    <span class="s3">enum </span><span class="s1">DIMS </span><span class="s4">{</span><span class="s1">ROWS</span><span class="s4">=</span><span class="s5">3</span><span class="s4">, </span><span class="s1">COLS</span><span class="s4">=</span><span class="s5">4</span><span class="s4">};</span>
+    <span class="s3">float </span><span class="s1">matrix</span><span class="s4">[</span><span class="s1">ROWS</span><span class="s4">][</span><span class="s1">COLS</span><span class="s4">]={</span>
+        <span class="s4">{</span><span class="s5">21</span><span class="s4">,</span><span class="s5">2</span><span class="s4">,</span><span class="s5">1</span><span class="s4">,</span><span class="s5">3</span><span class="s4">},</span>
+        <span class="s4">{</span><span class="s5">2</span><span class="s4">,-</span><span class="s5">8</span><span class="s4">,</span><span class="s5">20</span><span class="s4">,</span><span class="s5">5</span><span class="s4">},</span>
+        <span class="s4">{</span><span class="s5">12</span><span class="s4">,</span><span class="s5">3</span><span class="s4">,</span><span class="s5">2</span><span class="s4">,</span><span class="s5">4</span><span class="s4">},</span>
+        <span class="s6">// {5,2,110}</span>
+    <span class="s4">};</span>
+    <span class="s1">max_from_columns</span><span class="s4">(</span><span class="s1">ROWS</span><span class="s4">,</span><span class="s1">COLS</span><span class="s4">, &amp;</span><span class="s1">matrix</span><span class="s4">[</span><span class="s5">0</span><span class="s4">][</span><span class="s5">0</span><span class="s4">]);</span>
+
+
+    <span class="s1">squared_sum_pointers</span><span class="s4">(</span><span class="s1">ROWS</span><span class="s4">, </span><span class="s1">COLS</span><span class="s4">, </span><span class="s1">matrix</span><span class="s4">);</span>
+<span class="s4">}</span>
+
+<span class="s6">// Q1</span>
+<span class="s3">void </span><span class="s1">max_from_columns</span><span class="s4">(</span><span class="s3">int </span><span class="s1">rows</span><span class="s4">, </span><span class="s3">int </span><span class="s1">cols</span><span class="s4">, </span><span class="s3">float</span><span class="s4">* </span><span class="s1">matrix</span><span class="s4">) {</span>
+    <span class="s1">printf</span><span class="s4">(</span><span class="s2">&quot;printing  max from each column! </span><span class="s3">\n\n</span><span class="s2">&quot;</span><span class="s4">);</span>
+    <span class="s3">float </span><span class="s1">max_vector</span><span class="s4">[</span><span class="s1">rows</span><span class="s4">];</span>
+    <span class="s6">// printf(&quot;first value of matrix argument is: %f\n&quot;, *matrix);</span>
+    <span class="s1">max_vector</span><span class="s4">[</span><span class="s5">0</span><span class="s4">] = (*</span><span class="s1">matrix</span><span class="s4">);</span>
+    <span class="s6">// printf(&quot;max_vector starting value is: %f\n&quot;, max_vector[0]);</span>
+        <span class="s3">for </span><span class="s4">(</span><span class="s3">int </span><span class="s1">row</span><span class="s4">=</span><span class="s5">0</span><span class="s4">; </span><span class="s1">row</span><span class="s4">&lt;</span><span class="s1">rows</span><span class="s4">; </span><span class="s1">row</span><span class="s4">++){</span>
+            <span class="s3">for </span><span class="s4">(</span><span class="s3">int </span><span class="s1">col</span><span class="s4">=</span><span class="s5">0</span><span class="s4">; </span><span class="s1">col</span><span class="s4">&lt;</span><span class="s1">cols</span><span class="s4">; </span><span class="s1">col</span><span class="s4">++){</span>
+            <span class="s1">printf</span><span class="s4">(</span><span class="s2">&quot;%0.2f &quot;</span><span class="s4">, *(</span><span class="s1">matrix </span><span class="s4">+ (</span><span class="s1">row</span><span class="s4">*</span><span class="s1">cols</span><span class="s4">) + </span><span class="s1">col</span><span class="s4">));</span>
+            <span class="s3">if </span><span class="s4">(*(</span><span class="s1">matrix </span><span class="s4">+ (</span><span class="s1">row</span><span class="s4">*</span><span class="s1">cols</span><span class="s4">) + </span><span class="s1">col</span><span class="s4">) &gt; </span><span class="s1">max_vector</span><span class="s4">[</span><span class="s1">row</span><span class="s4">]) {</span>
+                <span class="s1">max_vector</span><span class="s4">[</span><span class="s1">row</span><span class="s4">]= *(</span><span class="s1">matrix </span><span class="s4">+ (</span><span class="s1">row</span><span class="s4">*</span><span class="s1">cols</span><span class="s4">) + </span><span class="s1">col</span><span class="s4">);</span>
+            <span class="s4">}</span>
+            <span class="s6">// printf(&quot;max_vector[%d]: %f\n&quot;, col, max_vector[col]);</span>
+        <span class="s4">}</span>
+         <span class="s1">printf</span><span class="s4">(</span><span class="s2">&quot;</span><span class="s3">\n</span><span class="s2">&quot;</span><span class="s4">);</span>
+         <span class="s6">// printf(&quot;max element in this col is: %f: \n&quot;, max_vector[col]);</span>
+    <span class="s4">}</span>
+    <span class="s1">printf</span><span class="s4">(</span><span class="s2">&quot;</span><span class="s3">\n</span><span class="s2">&quot;</span><span class="s4">);</span>
+    <span class="s1">printf</span><span class="s4">(</span><span class="s2">&quot;Vector of maxs is: </span><span class="s3">\n</span><span class="s2">&quot;</span><span class="s4">);</span>
+    <span class="s1">print_array</span><span class="s4">(</span><span class="s1">rows</span><span class="s4">, </span><span class="s1">max_vector</span><span class="s4">);</span>
+<span class="s4">}</span>
+
+<span class="s6">// Q2</span>
+<span class="s3">void </span><span class="s1">squared_sum_pointers</span><span class="s4">(</span><span class="s3">int </span><span class="s1">rows</span><span class="s4">, </span><span class="s3">int </span><span class="s1">cols</span><span class="s4">, </span><span class="s3">float </span><span class="s4">(*</span><span class="s1">matrix</span><span class="s4">)[</span><span class="s1">cols</span><span class="s4">]) {</span>
+    <span class="s1">printf</span><span class="s4">(</span><span class="s2">&quot;</span><span class="s3">\n</span><span class="s2">from fxn squared_sum_pointers: </span><span class="s3">\n</span><span class="s2">&quot;</span><span class="s4">);</span>
+    <span class="s3">float </span><span class="s1">squared_sum_vector</span><span class="s4">[</span><span class="s1">cols</span><span class="s4">];</span>
+    <span class="s1">squared_sum_vector</span><span class="s4">[</span><span class="s5">0</span><span class="s4">]=</span><span class="s5">0</span><span class="s4">;</span>
+    <span class="s3">for </span><span class="s4">(</span><span class="s3">int </span><span class="s1">j</span><span class="s4">=</span><span class="s5">0</span><span class="s4">; </span><span class="s1">j</span><span class="s4">&lt;</span><span class="s1">rows</span><span class="s4">; </span><span class="s1">j</span><span class="s4">++){</span>
+        <span class="s3">for </span><span class="s4">(</span><span class="s3">int </span><span class="s1">i</span><span class="s4">=</span><span class="s5">0</span><span class="s4">; </span><span class="s1">i</span><span class="s4">&lt;</span><span class="s1">cols</span><span class="s4">; </span><span class="s1">i</span><span class="s4">++)    {</span>
+            <span class="s1">printf</span><span class="s4">(</span><span class="s2">&quot;%0.2f &quot;</span><span class="s4">, *(*(</span><span class="s1">matrix</span><span class="s4">+</span><span class="s1">j</span><span class="s4">)+</span><span class="s1">i</span><span class="s4">));</span>
+            <span class="s1">squared_sum_vector</span><span class="s4">[</span><span class="s1">j</span><span class="s4">] += </span><span class="s1">pow</span><span class="s4">(*(*(</span><span class="s1">matrix</span><span class="s4">+</span><span class="s1">j</span><span class="s4">)+</span><span class="s1">i</span><span class="s4">), </span><span class="s5">2</span><span class="s4">);</span>
+        <span class="s4">}</span>
+        <span class="s1">printf</span><span class="s4">(</span><span class="s2">&quot;</span><span class="s3">\n</span><span class="s2">&quot;</span><span class="s4">);</span>
+    <span class="s4">}</span>
+    <span class="s1">printf</span><span class="s4">(</span><span class="s2">&quot;</span><span class="s3">\n</span><span class="s2">&quot;</span><span class="s4">);</span>
+    <span class="s1">print_and_max_index</span><span class="s4">(</span><span class="s1">rows</span><span class="s4">, </span><span class="s1">squared_sum_vector</span><span class="s4">);</span>
+<span class="s4">}</span>
+
+
+<span class="s6">// helpder_fxn</span>
+<span class="s3">void </span><span class="s1">print_and_max_index</span><span class="s4">(</span><span class="s3">int </span><span class="s1">size</span><span class="s4">, </span><span class="s3">float </span><span class="s4">(*</span><span class="s1">array</span><span class="s4">)) {</span>
+    <span class="s3">float </span><span class="s1">max_value </span><span class="s4">= *(</span><span class="s1">array</span><span class="s4">);</span>
+    <span class="s3">int </span><span class="s1">max_index </span><span class="s4">= </span><span class="s5">0</span><span class="s4">;</span>
+    <span class="s3">for </span><span class="s4">(</span><span class="s3">int </span><span class="s1">i</span><span class="s4">=</span><span class="s5">0</span><span class="s4">; </span><span class="s1">i</span><span class="s4">&lt;</span><span class="s1">size</span><span class="s4">; </span><span class="s1">i</span><span class="s4">++) {</span>
+        <span class="s1">printf</span><span class="s4">(</span><span class="s2">&quot;K=%d: %0.4f </span><span class="s3">\n</span><span class="s2">&quot;</span><span class="s4">,</span><span class="s1">i</span><span class="s4">, *(</span><span class="s1">array</span><span class="s4">+</span><span class="s1">i</span><span class="s4">));</span>
+        <span class="s3">if </span><span class="s4">(*(</span><span class="s1">array</span><span class="s4">+</span><span class="s1">i</span><span class="s4">)&gt; </span><span class="s1">max_value</span><span class="s4">) {</span>
+            <span class="s1">max_value </span><span class="s4">= *(</span><span class="s1">array</span><span class="s4">+</span><span class="s1">i</span><span class="s4">);</span>
+            <span class="s1">max_index </span><span class="s4">= </span><span class="s1">i</span><span class="s4">;</span>
+        <span class="s4">}</span>
+    <span class="s4">}</span>
+    <span class="s1">printf</span><span class="s4">(</span><span class="s2">&quot;</span><span class="s3">\n</span><span class="s2">max_value=%0.2f has index K=%d&quot;</span><span class="s4">, </span><span class="s1">max_value</span><span class="s4">, </span><span class="s1">max_index</span><span class="s4">);</span>
+<span class="s4">}</span>
+
+<span class="s6">// helper_fxn</span>
+<span class="s3">void </span><span class="s1">print_array</span><span class="s4">(</span><span class="s3">int </span><span class="s1">size</span><span class="s4">, </span><span class="s3">float </span><span class="s4">(*</span><span class="s1">array</span><span class="s4">)) {</span>
+    <span class="s3">for </span><span class="s4">(</span><span class="s3">int </span><span class="s1">i</span><span class="s4">=</span><span class="s5">0</span><span class="s4">; </span><span class="s1">i</span><span class="s4">&lt;</span><span class="s1">size</span><span class="s4">; </span><span class="s1">i</span><span class="s4">++) {</span>
+        <span class="s1">printf</span><span class="s4">(</span><span class="s2">&quot;%0.2f </span><span class="s3">\n</span><span class="s2">&quot;</span><span class="s4">, *(</span><span class="s1">array</span><span class="s4">+</span><span class="s1">i</span><span class="s4">));</span>
+        <span class="s6">// printf(&quot;K=%d: %0.4f \n&quot;,i, *(array+i));</span>
+    <span class="s4">}</span>
+
+<span class="s4">}</span></pre>
+</body>
+</html>

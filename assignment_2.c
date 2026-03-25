@@ -22,6 +22,7 @@ int main(){
     squared_sum_pointers(ROWS, COLS, matrix);
 }
 
+// Q1
 void max_from_columns(int rows, int cols, float* matrix) {
     printf("printing  max from each column! \n\n");
     float max_vector[rows];
@@ -44,6 +45,7 @@ void max_from_columns(int rows, int cols, float* matrix) {
     print_array(rows, max_vector);
 }
 
+// Q2
 void squared_sum_pointers(int rows, int cols, float (*matrix)[cols]) {
     printf("\nfrom fxn squared_sum_pointers: \n");
     float squared_sum_vector[cols];
@@ -59,6 +61,8 @@ void squared_sum_pointers(int rows, int cols, float (*matrix)[cols]) {
     print_and_max_index(rows, squared_sum_vector);
 }
 
+
+// helpder_fxn
 void print_and_max_index(int size, float (*array)) {
     float max_value = *(array);
     int max_index = 0;
@@ -72,6 +76,7 @@ void print_and_max_index(int size, float (*array)) {
     printf("\nmax_value=%0.2f has index K=%d", max_value, max_index);
 }
 
+// helper_fxn
 void print_array(int size, float (*array)) {
     for (int i=0; i<size; i++) {
         printf("%0.2f \n", *(array+i));
