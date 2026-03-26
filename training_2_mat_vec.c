@@ -1,9 +1,12 @@
 #include <stdio.h>
+#include <math.h>
 void print_matrix(int rows, int cols, double* matrix);
 void print_array(int size, double* array);
 void mat_vec(int rows, int cols, double* matrix, double* vector_x, double* vector_y);
 void compute_vec_b(int rows, int cols, double* sum_rows, double* matrix);
-void residual_vector(int rows, int cols, double* vector_b, double* vector_y);
+void compute_residual_vector(int rows, int cols, double* vector_b, double* vector_y, double* vector_residual);
+void inf_norm_residual(int rows, double* vector);
+
 
 int main(){
     printf("printing from training_2_mat_vec.c -- main\n");
@@ -14,17 +17,42 @@ int main(){
         {6,3,2,3},
         {1,2,7,8}
     };
-    double vector_x[COLS] = {7,3,2,7};
+    double vector_x[COLS] = {9,3,2,2};
     double vector_y[ROWS];
     double vector_b[ROWS];
+    double vector_residual[ROWS];
 
     mat_vec(ROWS,COLS, &matrix_A[0][0], vector_x, vector_y);
     compute_vec_b(ROWS, COLS,vector_b, &matrix_A[0][0]);
-
+    compute_residual_vector(ROWS, COLS, vector_b, vector_y, vector_residual);
+    inf_norm_residual(ROWS, vector_residual);
 
     return -1;
 
 }
+
+void inf_norm_residual(int rows, double* vector_residual) {
+    printf("printing from inf_norm_residual");
+    double max_value = fabs(*(vector_residual+0));
+    for (int i=0; i<rows; i++) {
+        if (fabs(*(vector_residual+i))>fabs(max_value)) {
+            max_value=fabs(*(vector_residual+i));
+        }
+    }
+    printf("inf norm of the residual vector is: %f", max_value);
+}
+
+void compute_residual_vector(int rows, int cols, double* vector_b, double* vector_y, double* vector_residual) {
+    printf("printing frm residual_vector\n");
+    for (int i=0; i<rows; i++) {
+        *(vector_residual+i) = *(vector_b+i) - *(vector_y+i);
+    }
+    printf("Residual vector is:\n");
+    print_array(rows, vector_residual);
+}
+
+
+
 void compute_vec_b(int rows, int cols, double* sum_rows, double* matrix) {
     *(sum_rows+0)=0;
     printf("\nfrom compute_sum fxn\n");
@@ -37,9 +65,6 @@ void compute_vec_b(int rows, int cols, double* sum_rows, double* matrix) {
     // max_index(size, sum_rows);
 }
 
-void residual_vector(int rows, int cols, double* vector_b, double* vector_y) {
-    printf("printing frm residual_vector");
-}
 
 
 void mat_vec(int rows, int cols, double* matrix, double* vector_x, double* vector_y) {
