@@ -70,7 +70,7 @@ void compare_vectors(int rows, double* vector_first, double* vector_second) {
                 // break;
             }else {
                 // printf("matrix is diagonally dominant");
-                printf("first>second : (%f > %f)\n", *(vector_first+i), *(vector_second+j));
+                printf("first>second: (%f > %f)\n", *(vector_first+i), *(vector_second+j));
             }
         }
         printf("\n");
